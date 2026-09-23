@@ -78,15 +78,20 @@ const memoizedResponse = (connection: net.Socket) => {
 
 // Guard server startup so this module can be imported in tests
 if (import.meta.main) {
+    const DEFAULT_PORT = 6379 // default port for redis
+
 
     if (process.env.DEBUG !== 'true') {
         console.debug = () => { }
     }
 
+    const host = process.env.HOST || "127.0.0.1"
+    const port = Number(process.env.PORT ? process.env.POST : DEFAULT_PORT) || DEFAULT_PORT
+
     const server: net.Server = net.createServer((connection: net.Socket) => {
         connection.on("data", memoizedResponse(connection))
     });
 
-    server.listen(6379, "127.0.0.1");
+    server.listen(port, host);
     console.log("Server ready for commands.")
 }
