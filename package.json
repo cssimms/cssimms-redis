@@ -2,9 +2,11 @@
   "name": "@codecrafters/redis",
   "description": "Build your own Redis challenge, from CodeCrafters",
   "type": "module",
+  "packageManager": "bun@1.3.3",
   "scripts": {
     "dev": "bun run --hot app/main.ts",
-    "test": "bun test"
+    "test": "bun test",
+    "prod": "bun run app/main.ts"
   },
   "devDependencies": {
     "@types/bun": "latest"

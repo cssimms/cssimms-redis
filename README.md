@@ -1,3 +1,17 @@
+### cssimms-redis
+I've found [Codecrafters](https://codecrafters.io/) very helpful for practicing hard problems and guiding my learning into a concrete direction. This is a copy of my work on implementing a sparse version of Redis.
+
+Also for practice, I'm deploying this service via [Render](https://render.com/).
+
+### Todo
+Things I'd like to get to
+
+- [x] use bun for prod build and packaging
+- [ ] master -> main (codecrafters currently requires master)
+- [ ] add .env files for configuration
+
+### Codecrafters template
+
 [![progress-banner](https://backend.codecrafters.io/progress/redis/361ec07a-fb94-41ca-8544-d7ccc694578c)](https://app.codecrafters.io/users/codecrafters-bot?r=2qF)
 
 This is a starting point for TypeScript solutions to the
