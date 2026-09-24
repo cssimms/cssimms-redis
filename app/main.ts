@@ -1,5 +1,5 @@
 import * as net from "net";
-import { RETURN_NEWLINE } from "./constants";
+import { HEALTHY_HTTP_RESPONSE, RETURN_NEWLINE } from "./constants";
 import { commandRouter } from "./controller";
 
 console.log("Starting Server...");
@@ -61,9 +61,19 @@ const memoizedResponse = (connection: net.Socket) => {
 
     const dataResponseCallback = (data: Buffer) => {
         console.log("~~ Recieved Request ~~")
+        const incomingData = data.toString()
+
+        if (incomingData.match(/HEAD/)?.length || 0 > 0) {
+            // HEAD requests are treated as healthchecks for now
+            console.debug("~~ Health Check returning healthy ~~")
+            connection.write(HEALTHY_HTTP_RESPONSE)
+            connection.end()
+
+            return;
+        }
 
         // TODO - not reading input quite yet, couldn't get the strings to match
-        const normalizedInput = decodeRespInput(data.toString())
+        const normalizedInput = decodeRespInput(incomingData)
         console.log("~~ Recieved Input ~~", normalizedInput)
 
         const responseString = commandRouter(normalizedInput)
@@ -93,5 +103,5 @@ if (import.meta.main) {
     });
 
     server.listen(port, host);
-    console.log("Server ready for commands.")
+    console.log(`Server ready in ${process.env.DEBUG ? "DEBUG" : "STANDARD"} mode on ${host}:${port}.`)
 }
